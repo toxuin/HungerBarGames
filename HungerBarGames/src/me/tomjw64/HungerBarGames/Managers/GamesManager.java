@@ -6,6 +6,7 @@ import java.util.Set;
 import org.bukkit.entity.Player;
 
 import me.tomjw64.HungerBarGames.Arena;
+import me.tomjw64.HungerBarGames.Game;
 import me.tomjw64.HungerBarGames.HungerBarGames;
 
 public class GamesManager {
@@ -69,7 +70,23 @@ public class GamesManager {
 	
 	public static void delArena(Arena a)
 	{
+		DataManager.removeArena(a.getName());
 		arenas.remove(a);
+	}
+	
+	public static Game getGame(Player p)
+	{
+		for(Arena a:arenas)
+		{
+			if(a.getGame()!=null)
+			{
+				if(a.getGame().isTribute(p))
+				{
+					return a.getGame();
+				}
+			}
+		}
+		return null;
 	}
 	
 }

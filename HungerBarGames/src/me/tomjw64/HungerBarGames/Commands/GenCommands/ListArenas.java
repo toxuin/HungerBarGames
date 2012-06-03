@@ -11,7 +11,6 @@ import me.tomjw64.HungerBarGames.Managers.GamesManager;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 public class ListArenas extends ChatVariableHolder implements HBGCommand{
 
@@ -46,12 +45,10 @@ public class ListArenas extends ChatVariableHolder implements HBGCommand{
 			}
 			list=list.substring(0,list.length()-2);
 			sender.sendMessage(list);
-			if(sender instanceof Player)
-			{
-				sender.sendMessage(prefix+YELLOW+"Key: "+RED+"No Game Running"+WHITE+"; "
-						+GREEN+"Game In Session"+WHITE+"; "
-						+BLUE+"In Lobby");
-			}
+			sender.sendMessage(prefix+YELLOW+"Key: "
+					+RED+"No Game Running"+WHITE+"; "
+					+GREEN+"Game In Session"+WHITE+"; "
+					+BLUE+"In Lobby");
 		}
 	}
 

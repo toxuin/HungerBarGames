@@ -30,6 +30,7 @@ public class Arena {
 	private List<Location> spawns=new ArrayList<Location>();
 	//Holds chests associated with the arena
 	private Map<ChestClass,Set<Chest>> chests=new HashMap<ChestClass,Set<Chest>>();
+	private ChestClass autofill;
 	//Holds blocks to be rolled back
 	private Map<Block,RollbackInfo> rollbacks=new HashMap<Block,RollbackInfo>();
 	//The spectator spawn
@@ -45,10 +46,10 @@ public class Arena {
 	
 	public Arena(String arenaName)
 	{
-		this(arenaName,null,null,ConfigManager.getMaxPlayers(),ConfigManager.getMinPlayers(),null,null,new ArrayList<Location>(),new HashMap<ChestClass,Set<Chest>>());
+		this(arenaName,null,null,ConfigManager.getMaxPlayers(),ConfigManager.getMinPlayers(),null,null,new ArrayList<Location>(),new HashMap<ChestClass,Set<Chest>>(),null);
 	}
 	
-	public Arena(String arenaName,CuboidPoint cp1,CuboidPoint cp2,int maxP,int minP,Location lobby,Location spec,List<Location> spwns,Map<ChestClass,Set<Chest>> chsts)
+	public Arena(String arenaName,CuboidPoint cp1,CuboidPoint cp2,int maxP,int minP,Location lobby,Location spec,List<Location> spwns,Map<ChestClass,Set<Chest>> chsts,ChestClass filler)
 	{
 		name=arenaName;
 		changes=false;
@@ -70,6 +71,7 @@ public class Arena {
 		specPoint=spec;
 		spawns=spwns;
 		chests=chsts;
+		autofill=filler;
 	}
 	
 	public void startGame(boolean repeat)
@@ -198,6 +200,7 @@ public class Arena {
 			{
 				c.getInventory().clear();
 				cc.fillChest(c);
+				game.setFilled(c);
 			}
 		}
 	}
@@ -294,6 +297,17 @@ public class Arena {
 			b.setData(entry.getValue().getData());
 		}
 		HungerBarGames.logger.info("Arena "+name+" rolled back!");
+	}
+	
+	public void setFiller(ChestClass cc)
+	{
+		autofill=cc;
+		changes=true;
+	}
+	
+	public ChestClass getFiller()
+	{
+		return autofill;
 	}
 	
 }

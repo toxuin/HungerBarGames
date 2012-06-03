@@ -5,7 +5,7 @@ import me.tomjw64.HungerBarGames.CommandHandler;
 import me.tomjw64.HungerBarGames.Commands.HBGCommand;
 import me.tomjw64.HungerBarGames.General.ChatVariableHolder;
 import me.tomjw64.HungerBarGames.General.ChestClass;
-import me.tomjw64.HungerBarGames.Managers.ConfigManager;
+import me.tomjw64.HungerBarGames.Managers.ChestClassManager;
 
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
@@ -25,7 +25,7 @@ public class AssignChest extends ChatVariableHolder implements HBGCommand{
 			{
 				if(a.isCuboidSet())
 				{
-					ChestClass cc=ConfigManager.getChestClass(args[0]);
+					ChestClass cc=ChestClassManager.getChestClass(args[0]);
 					if(cc!=null)
 					{
 						BlockState target=p.getTargetBlock(null,30).getState();

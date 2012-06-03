@@ -7,11 +7,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import me.tomjw64.HungerBarGames.HungerBarGames;
-import me.tomjw64.HungerBarGames.General.ChestClass;
-import me.tomjw64.HungerBarGames.General.ChestItem;
 
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -48,8 +45,6 @@ public class ConfigManager {
 	private static boolean playerPerms;
 	//Holds whitelisted/blacklisted blocks
 	private static Set<Integer> exempt=new HashSet<Integer>();
-	//Chest Classes
-	private static Set<ChestClass> chests=new HashSet<ChestClass>();
 	
 	
 	//Call onEnable for initialization
@@ -143,10 +138,6 @@ public class ConfigManager {
 			config.createSection("ExemptBlocks");
 			config.set("ExemptBlocks", new ArrayList<String>());
 		}
-		if(!config.contains("ChestClasses"))
-		{
-			config.createSection("ChestClasses");
-		}
 		saveConfig();
 		
 		//Load configuration options to memory
@@ -172,40 +163,6 @@ public class ConfigManager {
 				HungerBarGames.logger.warning("Could not load block "+id+" as an exemption!");
 			}
 		}
-		ConfigurationSection classes=config.getConfigurationSection("ChestClasses");
-		for(String x:classes.getKeys(false))
-		{
-			ChestClass cc= new ChestClass(x);
-			for(String i:classes.getStringList(x))
-			{
-				String[] info=i.split(";");
-				try
-				{
-					int chance=Integer.parseInt(info[1]);
-					int amount=Integer.parseInt(info[2]);
-					int item;
-					if(info[0].contains("#"))
-					{
-						String[] itemInfo=info[0].split("#");
-						item=Integer.parseInt(itemInfo[0]);
-						short data=Short.parseShort(itemInfo[1]);
-						cc.addItem(new ChestItem(item,chance,amount,data));
-					}
-					else
-					{
-						item=Integer.parseInt(info[0]);
-						cc.addItem(new ChestItem(item,chance,amount));
-					}
-				}
-				catch(Exception wtf)
-				{
-					wtf.printStackTrace();
-					HungerBarGames.logger.warning("Could not load a chest item under class "+x);
-				}
-			}
-			chests.add(cc);
-		}
-		
 	}
 	//Get the config
 	public static FileConfiguration getConfig()
@@ -280,17 +237,6 @@ public class ConfigManager {
 			}
 		}
 		return false;
-	}
-	public static ChestClass getChestClass(String name)
-	{
-		for(ChestClass cc:chests)
-		{
-			if(cc.getName().equalsIgnoreCase(name))
-			{
-				return cc;
-			}
-		}
-		return null;
 	}
 	public static boolean usingPlayerPerms()
 	{

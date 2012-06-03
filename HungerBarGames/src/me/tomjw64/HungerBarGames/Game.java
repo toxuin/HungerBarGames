@@ -16,6 +16,7 @@ import me.tomjw64.HungerBarGames.Threads.*;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
@@ -24,6 +25,7 @@ public class Game extends ChatVariableHolder{
 	private Arena arena;
 	private Set<Player> tributes=new HashSet<Player>();
 	private Set<String> deaths=new HashSet<String>();
+	private Set<Chest> filledChests=new HashSet<Chest>();
 	private boolean repeat;
 	private Status status;
 	private boolean notEnoughPlayers=false;
@@ -76,6 +78,10 @@ public class Game extends ChatVariableHolder{
 	{
 		status=null;
 		HandlerList.unregisterAll(HungerBarGames.plugin);
+		if(ConfigManager.getPvP())
+		{
+			new AntiPvPListener(HungerBarGames.plugin);
+		}
 		arena.endGame(repeat);
 	}
 	
@@ -208,6 +214,7 @@ public class Game extends ChatVariableHolder{
 			new GameDamageListener(this);
 			new GameBlockListener(this);
 			new BlockLogger(this);
+			new GameChestListener(this);
 			break;
 		}
 		if(ConfigManager.getPvP())
@@ -221,4 +228,13 @@ public class Game extends ChatVariableHolder{
 		return arena;
 	}
 	
+	public void setFilled(Chest c)
+	{
+		filledChests.add(c);
+	}
+	
+	public boolean beenFilled(Chest c)
+	{
+		return filledChests.contains(c);
+	}
 }

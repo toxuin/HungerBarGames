@@ -69,6 +69,7 @@ public class DataManager {
 			Location spec=null;
 			List<Location> spawns=new ArrayList<Location>();
 			Map<ChestClass,Set<Chest>> chests=new HashMap<ChestClass,Set<Chest>>();
+			ChestClass autofiller=null;
 			if(database.getString(path+"World")!=null&&pl.getServer().getWorld(database.getString(path+"World"))!=null)
 			{
 				w=pl.getServer().getWorld(database.getString(path+"World"));
@@ -104,9 +105,9 @@ public class DataManager {
 				{
 					for(String x:classes.getKeys(false))
 					{
-						if(ConfigManager.getChestClass(x)!=null)
+						if(ChestClassManager.getChestClass(x)!=null)
 						{
-							ChestClass cc=ConfigManager.getChestClass(x);
+							ChestClass cc=ChestClassManager.getChestClass(x);
 							Set<Chest> c=new HashSet<Chest>();
 							for(String className:classes.getStringList(x))
 							{
@@ -158,9 +159,14 @@ public class DataManager {
 				float lpitch=Float.parseFloat(lobbyData[5]);
 				lobby=new Location(lw,lx,ly,lz,lyaw,lpitch);
 			}
-			GamesManager.addArena(new Arena(s,cp1,cp2,database.getInt(path+"Max"),database.getInt(path+"Min"),lobby,spec,spawns,chests));
-		}
+			if(database.getString(path+"Autofill")!=null)
+			{
+				autofiller=ChestClassManager.getChestClass(database.getString(path+"Autofill"));
+			}
+			GamesManager.addArena(new Arena(s,cp1,cp2,database.getInt(path+"Max"),database.getInt(path+"Min"),lobby,spec,spawns,chests,autofiller));
+		}		
 	}
+
 	//Get the database
 	public static FileConfiguration getDatabase()
 	{
@@ -224,8 +230,18 @@ public class DataManager {
 					}
 					database.set(path+"Chests."+entry.getKey().getName(),chestLoc);
 				}
+				ChestClass cc=a.getFiller();
+				if(cc!=null)
+				{
+					database.set(path+"Autofill", cc.getName());
+				}
+				
 			}
 		}
 		saveDatabase();
+	}
+	public static void removeArena(String name)
+	{
+		database.set(name, null);
 	}
 }
