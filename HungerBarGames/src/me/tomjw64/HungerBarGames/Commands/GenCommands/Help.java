@@ -14,7 +14,10 @@ public class Help extends ChatVariableHolder implements HBGCommand{
 		sender.sendMessage(prefix+GREEN+"HungerBarGames Commands:");
 		for(HBGCommand c:CommandHandler.getCmds())
 		{
-			sender.sendMessage(BLUE+"/hbg "+c.usage()+YELLOW+" - "+c.description());
+			if(sender.isOp()||sender.hasPermission(c.permission()))
+			{
+				sender.sendMessage(BLUE+"/hbg "+c.usage()+YELLOW+" - "+c.description());
+			}
 		}
 		sender.sendMessage(prefix+GREEN+"End of help");
 	}

@@ -30,6 +30,7 @@ public class CommandHandler {
 		cmds.add(new Leave());
 		cmds.add(new Spec());
 		cmds.add(new AssignChest());
+		cmds.add(new Unassign());
 		cmds.add(new AutoAssign());
 		cmds.add(new Create());
 		cmds.add(new Delete());

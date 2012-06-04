@@ -308,4 +308,11 @@ public class Arena {
 		return autofill;
 	}
 	
+	public void unassign(Chest c)
+	{
+		for(Set<Chest> cts:chests.values())
+		{
+			cts.remove(c);
+		}
+	}
 }

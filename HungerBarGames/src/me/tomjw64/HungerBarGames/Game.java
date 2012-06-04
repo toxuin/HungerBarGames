@@ -52,10 +52,10 @@ public class Game extends ChatVariableHolder{
 	public void startCountdown()
 	{
 		int point=0;
-		String list=prefix+GREEN+"Tributes: "+RED;
+		String list=prefix+GREEN+"Tributes: ";
 		for(Player p:tributes)
 		{
-			list+=p.getName()+", ";
+			list+=RED+p.getName()+WHITE+", ";
 			p.teleport(arena.spawnAt(point));
 			p.setGameMode(GameMode.SURVIVAL);
 			clearInv(p);
