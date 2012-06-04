@@ -27,7 +27,7 @@ public class SetSpawn extends ChatVariableHolder implements HBGCommand{
 						try
 						{
 							pos=Integer.parseInt(args[0]);
-							a.addSpawn(p.getLocation());
+							a.addSpawn(new Integer(pos),p.getLocation());
 							p.sendMessage(prefix+YELLOW+"Spawn point "+BLUE+pos+YELLOW+" set for arena "+BLUE+a.getName()+YELLOW+"!");
 						}
 						catch(Exception wtf)

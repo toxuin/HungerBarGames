@@ -1,9 +1,7 @@
 package me.tomjw64.HungerBarGames;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -27,7 +25,7 @@ public class Arena {
 	private CuboidPoint cuboid1;
 	private CuboidPoint cuboid2;
 	//Holds player spawn points
-	private List<Location> spawns=new ArrayList<Location>();
+	private Map<Integer,Location> spawns=new HashMap<Integer,Location>();
 	//Holds chests associated with the arena
 	private Map<ChestClass,Set<Chest>> chests=new HashMap<ChestClass,Set<Chest>>();
 	private ChestClass autofill;
@@ -46,10 +44,10 @@ public class Arena {
 	
 	public Arena(String arenaName)
 	{
-		this(arenaName,null,null,ConfigManager.getMaxPlayers(),ConfigManager.getMinPlayers(),null,null,new ArrayList<Location>(),new HashMap<ChestClass,Set<Chest>>(),null);
+		this(arenaName,null,null,ConfigManager.getMaxPlayers(),ConfigManager.getMinPlayers(),null,null,new HashMap<Integer,Location>(),new HashMap<ChestClass,Set<Chest>>(),null);
 	}
 	
-	public Arena(String arenaName,CuboidPoint cp1,CuboidPoint cp2,int maxP,int minP,Location lobby,Location spec,List<Location> spwns,Map<ChestClass,Set<Chest>> chsts,ChestClass filler)
+	public Arena(String arenaName,CuboidPoint cp1,CuboidPoint cp2,int maxP,int minP,Location lobby,Location spec,Map<Integer,Location> spwns,Map<ChestClass,Set<Chest>> chsts,ChestClass filler)
 	{
 		name=arenaName;
 		changes=false;
@@ -145,16 +143,16 @@ public class Arena {
 	
 	public Location spawnAt(int index)
 	{
-		return spawns.get(index);
+		return spawns.get(Integer.valueOf(index));
 	}
 	
-	public void addSpawn(Location spawn)
+	public void addSpawn(Integer pos,Location spawn)
 	{
-		spawns.add(spawn);
+		spawns.put(pos,spawn);
 		changes=true;
 	}
 	
-	public List<Location> getSpawns()
+	public Map<Integer,Location> getSpawns()
 	{
 		return spawns;
 	}

@@ -67,7 +67,7 @@ public class DataManager {
 			CuboidPoint cp2=null;
 			Location lobby=null;
 			Location spec=null;
-			List<Location> spawns=new ArrayList<Location>();
+			Map<Integer,Location> spawns=new HashMap<Integer,Location>();
 			Map<ChestClass,Set<Chest>> chests=new HashMap<ChestClass,Set<Chest>>();
 			ChestClass autofiller=null;
 			if(database.getString(path+"World")!=null&&pl.getServer().getWorld(database.getString(path+"World"))!=null)
@@ -97,7 +97,8 @@ public class DataManager {
 						double z=Double.parseDouble(data[2]);
 						float yaw=Float.parseFloat(data[3]);
 						float pitch=Float.parseFloat(data[4]);
-						spawns.add(new Location(w,x,y,z,yaw,pitch));
+						int pos=Integer.parseInt(data[5]);
+						spawns.put(pos,new Location(w,x,y,z,yaw,pitch));
 					}
 				}
 				ConfigurationSection classes=database.getConfigurationSection(path+"Chests");
@@ -216,9 +217,10 @@ public class DataManager {
 					database.set(path+"Spec",l1.getWorld().getName()+";"+l1.getX()+";"+l1.getY()+";"+l1.getZ()+";"+l1.getYaw()+";"+l1.getPitch());
 				}
 				List<String> spawns=new ArrayList<String>();
-				for(Location l2:a.getSpawns())
+				for(Map.Entry<Integer,Location> entry:a.getSpawns().entrySet())
 				{
-					spawns.add(l2.getX()+";"+l2.getY()+";"+l2.getZ()+";"+l2.getYaw()+";"+l2.getPitch());
+					Location l2=entry.getValue();
+					spawns.add(l2.getX()+";"+l2.getY()+";"+l2.getZ()+";"+l2.getYaw()+";"+l2.getPitch()+";"+entry.getKey().intValue());
 				}
 				database.set(path+"Spawns",spawns);
 				for(Map.Entry<ChestClass,Set<Chest>> entry:a.getChests().entrySet())
