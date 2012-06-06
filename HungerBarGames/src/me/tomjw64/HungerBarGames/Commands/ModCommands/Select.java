@@ -3,12 +3,11 @@ package me.tomjw64.HungerBarGames.Commands.ModCommands;
 import me.tomjw64.HungerBarGames.Arena;
 import me.tomjw64.HungerBarGames.CommandHandler;
 import me.tomjw64.HungerBarGames.Commands.HBGCommand;
-import me.tomjw64.HungerBarGames.General.ChatVariableHolder;
 import me.tomjw64.HungerBarGames.Managers.GamesManager;
 
 import org.bukkit.command.CommandSender;
 
-public class Select extends ChatVariableHolder implements HBGCommand{
+public class Select extends HBGCommand{
 
 	@Override
 	public void execute(CommandSender sender, String[] args)

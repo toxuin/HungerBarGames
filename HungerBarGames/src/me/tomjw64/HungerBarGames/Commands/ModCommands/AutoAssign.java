@@ -5,11 +5,10 @@ import org.bukkit.command.CommandSender;
 import me.tomjw64.HungerBarGames.Arena;
 import me.tomjw64.HungerBarGames.CommandHandler;
 import me.tomjw64.HungerBarGames.Commands.HBGCommand;
-import me.tomjw64.HungerBarGames.General.ChatVariableHolder;
 import me.tomjw64.HungerBarGames.General.ChestClass;
 import me.tomjw64.HungerBarGames.Managers.ChestClassManager;
 
-public class AutoAssign extends ChatVariableHolder implements HBGCommand{
+public class AutoAssign extends HBGCommand{
 
 	@Override
 	public void execute(CommandSender sender, String[] args) {

@@ -2,13 +2,12 @@ package me.tomjw64.HungerBarGames.Commands.GenCommands;
 
 import me.tomjw64.HungerBarGames.Arena;
 import me.tomjw64.HungerBarGames.Commands.HBGCommand;
-import me.tomjw64.HungerBarGames.General.ChatVariableHolder;
 import me.tomjw64.HungerBarGames.Managers.GamesManager;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class Join extends ChatVariableHolder implements HBGCommand{
+public class Join extends HBGCommand{
 
 	@Override
 	public void execute(CommandSender sender, String[] args)

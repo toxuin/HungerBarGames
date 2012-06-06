@@ -1,13 +1,12 @@
 package me.tomjw64.HungerBarGames.Commands.ModCommands;
 
+import org.bukkit.command.CommandSender;
+
 import me.tomjw64.HungerBarGames.Arena;
-import me.tomjw64.HungerBarGames.CommandHandler;
 import me.tomjw64.HungerBarGames.Commands.HBGCommand;
 import me.tomjw64.HungerBarGames.Managers.GamesManager;
 
-import org.bukkit.command.CommandSender;
-
-public class Delete extends HBGCommand{
+public class End extends HBGCommand{
 
 	@Override
 	public void execute(CommandSender sender, String[] args)
@@ -15,9 +14,15 @@ public class Delete extends HBGCommand{
 		Arena a=GamesManager.getArena(args[0]);
 		if(a!=null)
 		{
-			GamesManager.delArena(a);
-			CommandHandler.getSelections().remove(sender);
-			sender.sendMessage(prefix+YELLOW+"Arena "+BLUE+args[0]+YELLOW+" has been deleted!");
+			if(a.getGame()==null)
+			{
+				a.getGame().endGame(true);
+				sender.sendMessage(prefix+GREEN+"Game Cancelled!");
+			}
+			else
+			{
+				sender.sendMessage(prefix+RED+"A game is not running in arena "+BLUE+args[0]+"!");
+			}
 		}
 		else
 		{
@@ -27,22 +32,22 @@ public class Delete extends HBGCommand{
 
 	@Override
 	public String cmd() {
-		return "delete";
+		return "end";
 	}
 
 	@Override
 	public String usage() {
-		return cmd()+" [arena]";
+		return cmd()+ "[arena]";
 	}
 
 	@Override
 	public String description() {
-		return "deletes an arena";
+		return "cancels a game";
 	}
 
 	@Override
 	public String permission() {
-		return "HBG.admin.delete";
+		return "HBG.mod.end";
 	}
 
 	@Override

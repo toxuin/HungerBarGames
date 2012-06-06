@@ -5,14 +5,13 @@ import java.util.Set;
 import me.tomjw64.HungerBarGames.Arena;
 import me.tomjw64.HungerBarGames.Game;
 import me.tomjw64.HungerBarGames.Commands.HBGCommand;
-import me.tomjw64.HungerBarGames.General.ChatVariableHolder;
 import me.tomjw64.HungerBarGames.General.Status;
 import me.tomjw64.HungerBarGames.Managers.GamesManager;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-public class ListArenas extends ChatVariableHolder implements HBGCommand{
+public class ListArenas extends HBGCommand{
 
 	@Override
 	public void execute(CommandSender sender, String[] args)

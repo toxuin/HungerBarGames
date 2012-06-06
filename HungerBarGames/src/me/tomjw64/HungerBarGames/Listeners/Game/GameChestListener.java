@@ -27,6 +27,7 @@ public class GameChestListener extends GameListener{
 			if(!getGame().beenFilled(c))
 			{
 				getGame().getArena().getFiller().fillChest(c);
+				getGame().setFilled(c);
 			}
 		}
 	}

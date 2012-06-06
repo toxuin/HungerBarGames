@@ -2,11 +2,10 @@ package me.tomjw64.HungerBarGames.Commands.ModCommands;
 
 import me.tomjw64.HungerBarGames.HungerBarGames;
 import me.tomjw64.HungerBarGames.Commands.HBGCommand;
-import me.tomjw64.HungerBarGames.General.ChatVariableHolder;
 
 import org.bukkit.command.CommandSender;
 
-public class Reload extends ChatVariableHolder implements HBGCommand{
+public class Reload extends HBGCommand{
 	public static HungerBarGames pl;
 	
 	public Reload(HungerBarGames instance)

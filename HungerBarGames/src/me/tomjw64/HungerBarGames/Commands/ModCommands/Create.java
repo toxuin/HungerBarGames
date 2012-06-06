@@ -4,10 +4,9 @@ import org.bukkit.command.CommandSender;
 
 import me.tomjw64.HungerBarGames.Arena;
 import me.tomjw64.HungerBarGames.Commands.HBGCommand;
-import me.tomjw64.HungerBarGames.General.ChatVariableHolder;
 import me.tomjw64.HungerBarGames.Managers.GamesManager;
 
-public class Create extends ChatVariableHolder implements HBGCommand{
+public class Create extends HBGCommand{
 	
 	@Override
 	public void execute(CommandSender sender, String[] args)

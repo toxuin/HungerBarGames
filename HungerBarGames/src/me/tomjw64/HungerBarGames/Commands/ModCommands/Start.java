@@ -2,12 +2,11 @@ package me.tomjw64.HungerBarGames.Commands.ModCommands;
 
 import me.tomjw64.HungerBarGames.Arena;
 import me.tomjw64.HungerBarGames.Commands.HBGCommand;
-import me.tomjw64.HungerBarGames.General.ChatVariableHolder;
 import me.tomjw64.HungerBarGames.Managers.GamesManager;
 
 import org.bukkit.command.CommandSender;
 
-public class Start extends ChatVariableHolder implements HBGCommand{
+public class Start extends HBGCommand{
 
 	@Override
 	public void execute(CommandSender sender, String[] args)
@@ -20,6 +19,7 @@ public class Start extends ChatVariableHolder implements HBGCommand{
 				if(a.getSpec()!=null&&a.getLobby()!=null&&a.getCuboid1()!=null&a.getCuboid2()!=null)
 				{
 					a.startGame(false);
+					sender.sendMessage(prefix+GREEN+"Game Started!");
 				}
 				else
 				{

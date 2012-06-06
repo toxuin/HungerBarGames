@@ -74,15 +74,19 @@ public class Game extends ChatVariableHolder{
 		
 	}
 	
-	public void endGame()
+	public void endGame(boolean forced)
 	{
 		status=null;
-		HandlerList.unregisterAll(HungerBarGames.plugin);
-		if(ConfigManager.getPvP())
+		resetListeners();
+		if(!forced)
 		{
-			new AntiPvPListener(HungerBarGames.plugin);
+			arena.endGame(repeat);
 		}
-		arena.endGame(repeat);
+		else
+		{
+			arena.endGame(false);
+			Bukkit.getServer().broadcastMessage(prefix+YELLOW+"The game in arena "+BLUE+arena.getName()+" has been cancelled!");
+		}
 	}
 	
 	public void declareWinner()
@@ -92,7 +96,7 @@ public class Game extends ChatVariableHolder{
 		Bukkit.getServer().broadcastMessage(prefix+YELLOW+"Player "+BLUE+p.getName()+YELLOW+" has won the game in arena "+BLUE+arena.getName()+"!");
 		fullHeal(p);
 		//TODO: Give rewards
-		endGame();
+		endGame(false);
 	}
 	
 	public void addTribute(Player p)
@@ -198,7 +202,7 @@ public class Game extends ChatVariableHolder{
 	
 	public void updateListeners()
 	{
-		HandlerList.unregisterAll(HungerBarGames.plugin);
+		resetListeners();
 		switch(status)
 		{
 		case LOBBY:
@@ -215,8 +219,14 @@ public class Game extends ChatVariableHolder{
 			new GameBlockListener(this);
 			new BlockLogger(this);
 			new GameChestListener(this);
+			new GameTeleportListner(this);
 			break;
 		}
+	}
+	
+	public void resetListeners()
+	{
+		HandlerList.unregisterAll(HungerBarGames.plugin);
 		if(ConfigManager.getPvP())
 		{
 			new AntiPvPListener(HungerBarGames.plugin);

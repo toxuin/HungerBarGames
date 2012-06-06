@@ -5,11 +5,10 @@ import java.util.Set;
 import org.bukkit.command.CommandSender;
 
 import me.tomjw64.HungerBarGames.Commands.HBGCommand;
-import me.tomjw64.HungerBarGames.General.ChatVariableHolder;
 import me.tomjw64.HungerBarGames.General.ChestClass;
 import me.tomjw64.HungerBarGames.Managers.ChestClassManager;
 
-public class ListClasses extends ChatVariableHolder implements HBGCommand{
+public class ListClasses extends HBGCommand{
 
 	@Override
 	public void execute(CommandSender sender, String[] args) {
