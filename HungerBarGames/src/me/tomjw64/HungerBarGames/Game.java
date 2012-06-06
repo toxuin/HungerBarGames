@@ -11,6 +11,7 @@ import me.tomjw64.HungerBarGames.Listeners.GameListener;
 import me.tomjw64.HungerBarGames.Listeners.Lobby.*;
 import me.tomjw64.HungerBarGames.Listeners.Countdown.*;
 import me.tomjw64.HungerBarGames.Listeners.Game.*;
+import me.tomjw64.HungerBarGames.Managers.ConfigManager;
 import me.tomjw64.HungerBarGames.Managers.GamesManager;
 import me.tomjw64.HungerBarGames.Threads.*;
 
@@ -97,7 +98,11 @@ public class Game extends ChatVariableHolder{
 		GamesManager.setInGame(p,false);
 		Bukkit.getServer().broadcastMessage(prefix+YELLOW+"Player "+BLUE+p.getName()+YELLOW+" has won the game in arena "+BLUE+arena.getName()+"!");
 		fullHeal(p);
-		//TODO: Give rewards
+		for(String cmd:ConfigManager.getWinCommands())
+		{
+			cmd=cmd.replace("<player>", p.getName());
+			Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),cmd);
+		}
 		endGame(false);
 	}
 	

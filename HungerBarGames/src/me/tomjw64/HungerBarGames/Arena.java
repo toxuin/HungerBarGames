@@ -191,7 +191,6 @@ public class Arena {
 			ChestClass cc=entry.getKey();
 			for(Chest c:entry.getValue())
 			{
-				c.getInventory().clear();
 				cc.fillChest(c);
 				game.setFilled(c);
 			}

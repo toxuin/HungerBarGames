@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import me.tomjw64.HungerBarGames.HungerBarGames;
@@ -45,6 +46,8 @@ public class ConfigManager {
 	private static boolean playerPerms;
 	//Holds whitelisted/blacklisted blocks
 	private static Set<Integer> exempt=new HashSet<Integer>();
+	//Commands to run on player win
+	private static List<String> winCmds=new ArrayList<String>();
 	
 	
 	//Call onEnable for initialization
@@ -138,6 +141,11 @@ public class ConfigManager {
 			config.createSection("ExemptBlocks");
 			config.set("ExemptBlocks", new ArrayList<String>());
 		}
+		if(!config.contains("WinCommands"))
+		{
+			config.createSection("WinCommands");
+			config.set("WinCommands", new ArrayList<String>());
+		}
 		saveConfig();
 		
 		//Load configuration options to memory
@@ -162,6 +170,10 @@ public class ConfigManager {
 			{
 				HungerBarGames.logger.warning("Could not load block "+id+" as an exemption!");
 			}
+		}
+		for(String cmd:config.getStringList("WinCommands"))
+		{
+			winCmds.add(cmd.replace("/", ""));
 		}
 	}
 	//Get the config
@@ -241,5 +253,9 @@ public class ConfigManager {
 	public static boolean usingPlayerPerms()
 	{
 		return playerPerms;
+	}
+	public static List<String> getWinCommands()
+	{
+		return winCmds;
 	}
 }

@@ -25,6 +25,7 @@ public class ChestClass {
 	public void fillChest(Chest c)
 	{
 		Inventory i=c.getInventory();
+		i.clear();
 		int limit=i.getSize();
 		for(ChestItem ci:items)
 		{
