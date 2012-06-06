@@ -14,7 +14,7 @@ public class End extends HBGCommand{
 		Arena a=GamesManager.getArena(args[0]);
 		if(a!=null)
 		{
-			if(a.getGame()==null)
+			if(a.getGame()!=null)
 			{
 				sender.sendMessage(prefix+GREEN+"Game Cancelled!");
 				a.getGame().endGame(true);
