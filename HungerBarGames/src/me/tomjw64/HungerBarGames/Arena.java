@@ -141,11 +141,6 @@ public class Arena {
 		return spawns.size();
 	}
 	
-	public Location spawnAt(int index)
-	{
-		return spawns.get(Integer.valueOf(index));
-	}
-	
 	public void addSpawn(Integer pos,Location spawn)
 	{
 		spawns.put(pos,spawn);

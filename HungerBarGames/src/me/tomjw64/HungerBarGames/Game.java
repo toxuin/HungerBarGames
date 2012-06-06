@@ -1,24 +1,25 @@
 package me.tomjw64.HungerBarGames;
 
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import me.tomjw64.HungerBarGames.General.ChatVariableHolder;
 import me.tomjw64.HungerBarGames.General.Status;
+import me.tomjw64.HungerBarGames.Listeners.GameListener;
 import me.tomjw64.HungerBarGames.Listeners.Lobby.*;
 import me.tomjw64.HungerBarGames.Listeners.Countdown.*;
 import me.tomjw64.HungerBarGames.Listeners.Game.*;
-import me.tomjw64.HungerBarGames.Listeners.Global.AntiPvPListener;
-import me.tomjw64.HungerBarGames.Managers.ConfigManager;
 import me.tomjw64.HungerBarGames.Managers.GamesManager;
 import me.tomjw64.HungerBarGames.Threads.*;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
-import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 
 public class Game extends ChatVariableHolder{
@@ -26,6 +27,7 @@ public class Game extends ChatVariableHolder{
 	private Set<Player> tributes=new HashSet<Player>();
 	private Set<String> deaths=new HashSet<String>();
 	private Set<Chest> filledChests=new HashSet<Chest>();
+	private Set<GameListener> listeners=new HashSet<GameListener>();
 	private boolean repeat;
 	private Status status;
 	private boolean notEnoughPlayers=false;
@@ -51,16 +53,16 @@ public class Game extends ChatVariableHolder{
 	
 	public void startCountdown()
 	{
-		int point=0;
+		Collection<Location> spawns=arena.getSpawns().values();
+		Iterator<Location> i=spawns.iterator();
 		String list=prefix+GREEN+"Tributes: ";
 		for(Player p:tributes)
 		{
 			list+=RED+p.getName()+WHITE+", ";
-			p.teleport(arena.spawnAt(point));
+			p.teleport(i.next());
 			p.setGameMode(GameMode.SURVIVAL);
 			clearInv(p);
 			fullHeal(p);
-			point++;
 		}
 		list=list.substring(0,list.length()-2);
 		for(Player p:tributes)
@@ -77,7 +79,7 @@ public class Game extends ChatVariableHolder{
 	public void endGame(boolean forced)
 	{
 		status=null;
-		resetListeners();
+		unregisterListeners();
 		if(!forced)
 		{
 			arena.endGame(repeat);
@@ -202,7 +204,7 @@ public class Game extends ChatVariableHolder{
 	
 	public void updateListeners()
 	{
-		resetListeners();
+		unregisterListeners();
 		switch(status)
 		{
 		case LOBBY:
@@ -224,12 +226,15 @@ public class Game extends ChatVariableHolder{
 		}
 	}
 	
-	public void resetListeners()
+	public void unregisterListeners()
 	{
-		HandlerList.unregisterAll(HungerBarGames.plugin);
-		if(ConfigManager.getPvP())
+		Object[] gls=listeners.toArray();
+		for(int x=0;x<gls.length;x++)
 		{
-			new AntiPvPListener(HungerBarGames.plugin);
+			GameListener gl=(GameListener)gls[x];
+			listeners.remove(gl);
+			gl.unregister();
+			gl=null;
 		}
 	}
 	
@@ -247,4 +252,10 @@ public class Game extends ChatVariableHolder{
 	{
 		return filledChests.contains(c);
 	}
+	
+	public void addListener(GameListener gl)
+	{
+		listeners.add(gl);
+	}
+	
 }

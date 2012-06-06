@@ -8,11 +8,8 @@ package me.tomjw64.HungerBarGames;
 
 import java.util.logging.Logger;
 
-import me.tomjw64.HungerBarGames.Listeners.Global.AntiPvPListener;
-import me.tomjw64.HungerBarGames.Managers.ChestClassManager;
-import me.tomjw64.HungerBarGames.Managers.ConfigManager;
-import me.tomjw64.HungerBarGames.Managers.DataManager;
-import me.tomjw64.HungerBarGames.Managers.PlayerDataManager;
+import me.tomjw64.HungerBarGames.Listeners.Global.*;
+import me.tomjw64.HungerBarGames.Managers.*;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -45,8 +42,9 @@ public class HungerBarGames extends JavaPlugin{
 		//Load listeners
 		if(ConfigManager.getPvP())
 		{
-			new AntiPvPListener(this);
+			new AntiPvPListener();
 		}
+		new ArenaProtectionListener();
 		
 		//Load commands
 		CommandHandler.loadCommands(this);

@@ -16,8 +16,8 @@ public class End extends HBGCommand{
 		{
 			if(a.getGame()==null)
 			{
-				a.getGame().endGame(true);
 				sender.sendMessage(prefix+GREEN+"Game Cancelled!");
+				a.getGame().endGame(true);
 			}
 			else
 			{

@@ -10,13 +10,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-public class AntiPvPListener implements Listener{
-	public static HungerBarGames pl;
+public class AntiPvPListener implements Listener{	
 	
-	public AntiPvPListener(HungerBarGames instance)
+	public AntiPvPListener()
 	{
-		pl=instance;
-		Bukkit.getServer().getPluginManager().registerEvents(this, pl);
+		Bukkit.getServer().getPluginManager().registerEvents(this,HungerBarGames.plugin);
 	}
 	
 	@EventHandler(priority=EventPriority.NORMAL, ignoreCancelled=true)

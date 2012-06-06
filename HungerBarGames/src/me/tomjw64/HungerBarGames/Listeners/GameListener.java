@@ -13,6 +13,7 @@ public abstract class GameListener implements Listener{
 	public GameListener(Game gm)
 	{
 		game=gm;
+		game.addListener(this);
 		Bukkit.getServer().getPluginManager().registerEvents(this,HungerBarGames.plugin);
 	}
 	

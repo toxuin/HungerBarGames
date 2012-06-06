@@ -98,7 +98,7 @@ public class DataManager {
 						float yaw=Float.parseFloat(data[3]);
 						float pitch=Float.parseFloat(data[4]);
 						int pos=Integer.parseInt(data[5]);
-						spawns.put(pos,new Location(w,x,y,z,yaw,pitch));
+						spawns.put(Integer.valueOf(pos),new Location(w,x,y,z,yaw,pitch));
 					}
 				}
 				ConfigurationSection classes=database.getConfigurationSection(path+"Chests");
