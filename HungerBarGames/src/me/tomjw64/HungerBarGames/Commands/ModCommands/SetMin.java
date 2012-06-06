@@ -56,7 +56,7 @@ public class SetMin extends HBGCommand {
 
 	@Override
 	public String permission() {
-		return "HBG.admin.setmin";
+		return "HBG.admin.setlimits";
 	}
 
 	@Override

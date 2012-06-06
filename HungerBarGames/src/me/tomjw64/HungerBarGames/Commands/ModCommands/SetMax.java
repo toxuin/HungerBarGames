@@ -56,7 +56,7 @@ public class SetMax extends HBGCommand {
 
 	@Override
 	public String permission() {
-		return "HBG.admin.setmax";
+		return "HBG.admin.setlimits";
 	}
 
 	@Override
