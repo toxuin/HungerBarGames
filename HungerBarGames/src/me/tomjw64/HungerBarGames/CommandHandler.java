@@ -45,7 +45,7 @@ public class CommandHandler {
 		cmds.add(new SetSpec());
 		cmds.add(new Start());
 		cmds.add(new StartRpt());
-		cmds.add(new End());
+		cmds.add(new Stop());
 	}
 	public static void handleCommand(HungerBarGames pl,CommandSender sender, String[] args)
 	{

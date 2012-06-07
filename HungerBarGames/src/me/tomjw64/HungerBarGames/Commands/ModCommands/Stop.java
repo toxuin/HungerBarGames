@@ -6,7 +6,7 @@ import me.tomjw64.HungerBarGames.Arena;
 import me.tomjw64.HungerBarGames.Commands.HBGCommand;
 import me.tomjw64.HungerBarGames.Managers.GamesManager;
 
-public class End extends HBGCommand{
+public class Stop extends HBGCommand{
 
 	@Override
 	public void execute(CommandSender sender, String[] args)
@@ -32,7 +32,7 @@ public class End extends HBGCommand{
 
 	@Override
 	public String cmd() {
-		return "end";
+		return "stop";
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class End extends HBGCommand{
 
 	@Override
 	public String permission() {
-		return "HBG.mod.end";
+		return "HBG.mod.stop";
 	}
 
 	@Override
