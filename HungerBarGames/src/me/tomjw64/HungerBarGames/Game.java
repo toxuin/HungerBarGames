@@ -83,6 +83,10 @@ public class Game extends ChatVariableHolder{
 		unregisterListeners();
 		if(!forced)
 		{
+			for(Player p:spectators)
+			{
+				setSpec(p,false);
+			}
 			arena.endGame(repeat);
 		}
 		else
