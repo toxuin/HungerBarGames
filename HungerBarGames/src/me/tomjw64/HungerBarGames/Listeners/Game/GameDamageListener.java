@@ -17,11 +17,19 @@ public class GameDamageListener extends GameListener{
 	@EventHandler(priority=EventPriority.NORMAL, ignoreCancelled=true)
 	public void damage(EntityDamageByEntityEvent dmg)
 	{
-		if(dmg.getEntity() instanceof Player&&dmg.getDamager() instanceof Player)
+		if(dmg.getEntity() instanceof Player)
 		{
 			Player dmgd=(Player)dmg.getEntity();
-			Player dmgr=(Player)dmg.getDamager();
-			if((getGame().isTribute(dmgd)!=getGame().isTribute(dmgr)))
+			if(dmg.getDamager() instanceof Player)
+			{
+				Player dmgr=(Player)dmg.getDamager();
+				if((getGame().isTribute(dmgd)!=getGame().isTribute(dmgr)))
+				{
+					dmg.setCancelled(true);
+					return;
+				}
+			}
+			if(getGame().isSpec(dmgd))
 			{
 				dmg.setCancelled(true);
 			}

@@ -18,22 +18,31 @@ public class EliminationListener extends GameListener{
 	@EventHandler(priority=EventPriority.NORMAL)
 	public void death(PlayerDeathEvent death)
 	{
-		if(getGame().isTribute(death.getEntity()))
+		Player dead=death.getEntity();
+		if(getGame().isTribute(dead))
 		{
-			Player dead=death.getEntity();
 			death.setDeathMessage(null);
 			getGame().eliminateTribute(dead);
+		}
+		else if(getGame().isSpec(dead))
+		{
+			death.getDrops().clear();
+			getGame().setSpec(dead,false);
 		}
 	}
 	
 	@EventHandler(priority=EventPriority.NORMAL)
 	public void leave(PlayerQuitEvent quit)
 	{
-		if(getGame().isTribute(quit.getPlayer()))
+		Player quitter=quit.getPlayer();
+		if(getGame().isTribute(quitter))
 		{
-			Player quitter=quit.getPlayer();
 			quit.setQuitMessage(null);
 			getGame().eliminateTribute(quitter);
+		}
+		else if(getGame().isSpec(quitter))
+		{
+			getGame().setSpec(quitter,false);
 		}
 	}
 	

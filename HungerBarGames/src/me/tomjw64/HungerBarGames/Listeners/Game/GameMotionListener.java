@@ -21,9 +21,10 @@ public class GameMotionListener extends GameListener{
 	public void move(PlayerMoveEvent move)
 	{
 		Player mover=move.getPlayer();
-		if(getGame().isTribute(mover))
+		boolean tribute=getGame().isTribute(mover);
+		if(tribute||getGame().isSpec(mover))
 		{
-			Game g=GamesManager.getGame(mover);
+			Game g=GamesManager.getGame(mover,tribute);
 			if(g.getArena().isInArena(move.getTo()))
 			{
 				Location from=move.getFrom();

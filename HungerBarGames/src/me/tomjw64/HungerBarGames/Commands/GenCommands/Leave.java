@@ -17,7 +17,7 @@ public class Leave extends HBGCommand{
 			Player p=(Player)sender;
 			if(GamesManager.isInGame(p))
 			{
-				Game g=GamesManager.getGame(p);
+				Game g=GamesManager.getGame(p,true);
 				if(g.getStatus()==Status.LOBBY)
 				{
 					g.removeTribute(p);
@@ -26,11 +26,16 @@ public class Leave extends HBGCommand{
 				{
 					g.eliminateTribute(p);
 				}
-				p.teleport(g.getArena().getSpec());
+				p.sendMessage(prefix+YELLOW+"You have left the game in arena "+BLUE+g.getArena().getName()+"!");
+			}
+			else if(GamesManager.isSpecing(p))
+			{
+				Game g=GamesManager.getGame(p,false);
+				g.setSpec(p,false);
 			}
 			else
 			{
-				p.sendMessage(prefix+RED+"You are not in a game!");
+				p.sendMessage(prefix+RED+"You are not in a game or spectating!");
 			}
 		}
 	}

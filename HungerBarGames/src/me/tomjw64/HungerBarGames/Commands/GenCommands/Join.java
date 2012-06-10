@@ -17,21 +17,28 @@ public class Join extends HBGCommand{
 			Player p=(Player)sender;
 			if(!GamesManager.isInGame(p))
 			{
-				Arena a=GamesManager.getArena(args[0]);
-				if(a!=null)
+				if(!GamesManager.isSpecing(p))
 				{
-					if(a.getGame()!=null)
+					Arena a=GamesManager.getArena(args[0]);
+					if(a!=null)
 					{
-						a.getGame().addTribute(p);
+						if(a.getGame()!=null)
+						{
+							a.getGame().addTribute(p);
+						}
+						else
+						{
+							p.sendMessage(prefix+RED+"There is not a game running in that arena!");
+						}
 					}
 					else
 					{
-						p.sendMessage(prefix+RED+"There is not a game running in that arena!");
+						p.sendMessage(prefix+RED+"There is no arena by that name!");
 					}
 				}
 				else
 				{
-					p.sendMessage(prefix+RED+"There is no arena by that name!");
+					p.sendMessage(prefix+RED+"You are spectating a game! Leave before you join!");
 				}
 			}
 			else

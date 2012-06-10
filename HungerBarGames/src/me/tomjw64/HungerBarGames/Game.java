@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import me.tomjw64.HungerBarGames.General.ChatVariableHolder;
+import me.tomjw64.HungerBarGames.General.Players;
 import me.tomjw64.HungerBarGames.General.Status;
 import me.tomjw64.HungerBarGames.Listeners.GameListener;
 import me.tomjw64.HungerBarGames.Listeners.Lobby.*;
@@ -18,14 +19,13 @@ import me.tomjw64.HungerBarGames.Threads.*;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 public class Game extends ChatVariableHolder{
 	private Arena arena;
 	private Set<Player> tributes=new HashSet<Player>();
+	private Set<Player> spectators=new HashSet<Player>();
 	private Set<String> deaths=new HashSet<String>();
 	private Set<Chest> filledChests=new HashSet<Chest>();
 	private Set<GameListener> listeners=new HashSet<GameListener>();
@@ -62,8 +62,8 @@ public class Game extends ChatVariableHolder{
 			list+=RED+p.getName()+WHITE+", ";
 			p.teleport(i.next());
 			p.setGameMode(GameMode.SURVIVAL);
-			clearInv(p);
-			fullHeal(p);
+			Players.clearInv(p);
+			Players.heal(p);
 		}
 		list=list.substring(0,list.length()-2);
 		for(Player p:tributes)
@@ -97,7 +97,7 @@ public class Game extends ChatVariableHolder{
 		Player p=(Player)tributes.toArray()[0];
 		GamesManager.setInGame(p,false);
 		Bukkit.getServer().broadcastMessage(prefix+YELLOW+"Player "+BLUE+p.getName()+YELLOW+" has won the game in arena "+BLUE+arena.getName()+"!");
-		fullHeal(p);
+		Players.heal(p);
 		for(String cmd:ConfigManager.getWinCommands())
 		{
 			cmd=cmd.replace("<player>", p.getName());
@@ -112,12 +112,12 @@ public class Game extends ChatVariableHolder{
 		{
 			tributes.add(p);
 			GamesManager.setInGame(p,true);
+			p.setGameMode(GameMode.SURVIVAL);
+			Players.clearInv(p);
+			Players.heal(p);
+			p.teleport(arena.getLobby());
 			p.sendMessage(prefix+YELLOW+"You have joined the game in arena "+BLUE+arena.getName()+"!");
 			p.sendMessage(prefix+YELLOW+"This game has "+BLUE+getNumTributes()+"/"+arena.getMaxPlayers()+YELLOW+" players!");
-			p.setGameMode(GameMode.SURVIVAL);
-			clearInv(p);
-			fullHeal(p);
-			p.teleport(arena.getLobby());
 			if(notEnoughPlayers&&getNumTributes()>=arena.getMinPlayers())
 			{
 				notEnoughPlayers=false;
@@ -191,22 +191,6 @@ public class Game extends ChatVariableHolder{
 		notEnoughPlayers=true;
 	}
 	
-	public void clearInv(Player p)
-	{
-		p.getInventory().clear();
-		p.getInventory().setHelmet(new ItemStack(Material.AIR));
-		p.getInventory().setChestplate(new ItemStack(Material.AIR));
-		p.getInventory().setLeggings(new ItemStack(Material.AIR));
-		p.getInventory().setBoots(new ItemStack(Material.AIR));
-	}
-	
-	public void fullHeal(Player p)
-	{
-		p.setHealth(20);
-		p.setFoodLevel(20);
-		p.setFireTicks(0);
-	}
-	
 	public void updateListeners()
 	{
 		unregisterListeners();
@@ -227,6 +211,8 @@ public class Game extends ChatVariableHolder{
 			new BlockLogger(this);
 			new GameChestListener(this);
 			new GameTeleportListner(this);
+			new GameMotionListener(this);
+			new SpectatorRestrictionListener(this);
 			break;
 		}
 	}
@@ -261,6 +247,39 @@ public class Game extends ChatVariableHolder{
 	public void addListener(GameListener gl)
 	{
 		listeners.add(gl);
+	}
+	
+	public boolean isSpec(Player p)
+	{
+		return spectators.contains(p);
+	}
+	
+	public void setSpec(Player p,boolean set)
+	{
+		if(set)
+		{
+			spectators.add(p);
+			GamesManager.setSpec(p,true);
+			p.setGameMode(GameMode.SURVIVAL);
+			p.setAllowFlight(true);
+			for(Player other:Bukkit.getServer().getOnlinePlayers())
+			{
+				other.hidePlayer(p);
+			}
+			p.teleport(arena.getSpec());
+			p.sendMessage(prefix+YELLOW+"You are now spectating arena "+BLUE+arena.getName()+"!");
+		}
+		else
+		{
+			spectators.remove(p);
+			GamesManager.setSpec(p,false);
+			p.setAllowFlight(false);
+			for(Player other:Bukkit.getServer().getOnlinePlayers())
+			{
+				other.showPlayer(p);
+			}
+			p.sendMessage(prefix+YELLOW+"You have stopped spectating arena "+BLUE+arena.getName()+"!");
+		}
 	}
 	
 }
