@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -50,4 +51,14 @@ public class SpectatorRestrictionListener extends GameListener{
 			}
 		}
 	}
+	
+	@EventHandler(priority=EventPriority.NORMAL, ignoreCancelled=true)
+	public void damage(EntityDamageEvent damage)
+	{
+		if(damage.getEntity() instanceof Player&&getGame().isSpec((Player)damage.getEntity()))
+		{
+			damage.setCancelled(true);
+		}
+	}
+	
 }
