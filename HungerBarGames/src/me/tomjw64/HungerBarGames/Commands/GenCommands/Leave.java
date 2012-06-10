@@ -52,7 +52,7 @@ public class Leave extends HBGCommand{
 
 	@Override
 	public String description() {
-		return "leaves a game";
+		return "leaves or stops spectating a game";
 	}
 
 	@Override

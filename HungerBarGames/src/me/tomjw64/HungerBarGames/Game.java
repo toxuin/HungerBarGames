@@ -87,6 +87,10 @@ public class Game extends ChatVariableHolder{
 			{
 				setSpec(p,false);
 			}
+			for(Player p:tributes)
+			{
+				removeTribute(p);
+			}
 			arena.endGame(repeat);
 		}
 		else
