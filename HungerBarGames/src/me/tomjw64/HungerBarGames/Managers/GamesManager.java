@@ -140,4 +140,19 @@ public class GamesManager {
 		return null;
 	}
 	
+	public static boolean respawnMarked(Player p)
+	{
+		return respawns.containsKey(p);
+	}
+	
+	public static void respawnUnmark(Player p)
+	{
+		respawns.remove(p);
+	}
+	
+	public static Location getRespawn(Player p)
+	{
+		return respawns.get(p);
+	}
+	
 }

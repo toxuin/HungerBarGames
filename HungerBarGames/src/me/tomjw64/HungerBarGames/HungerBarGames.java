@@ -45,6 +45,7 @@ public class HungerBarGames extends JavaPlugin{
 			new AntiPvPListener();
 		}
 		new ArenaProtectionListener();
+		new PlayerRespawnListener();
 		
 		//Load commands
 		CommandHandler.loadCommands(this);
