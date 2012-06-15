@@ -2,6 +2,7 @@ package me.tomjw64.HungerBarGames.Commands.GenCommands;
 
 import me.tomjw64.HungerBarGames.CommandHandler;
 import me.tomjw64.HungerBarGames.Commands.HBGCommand;
+import me.tomjw64.HungerBarGames.Managers.ConfigManager;
 
 import org.bukkit.command.CommandSender;
 
@@ -13,7 +14,18 @@ public class Help extends HBGCommand{
 		sender.sendMessage(prefix+GREEN+"HungerBarGames Commands:");
 		for(HBGCommand c:CommandHandler.getCmds())
 		{
-			if(sender.isOp()||sender.hasPermission(c.permission()))
+			String perm=c.permission();
+			String[] permSplit=perm.split("\\.");
+			String permGroup="";
+			for(int x=0;x<permSplit.length-1;x++)
+			{
+				permGroup+=permSplit[x]+".";
+			}
+			permGroup+="*";
+			if(sender.isOp()||sender.hasPermission(perm)
+					||sender.hasPermission(permGroup)
+					||sender.hasPermission("HBG.*")
+					||(!ConfigManager.usingPlayerPerms()&&permSplit[1].equalsIgnoreCase("player")))
 			{
 				sender.sendMessage(BLUE+"/hbg "+c.usage()+YELLOW+" - "+c.description());
 			}
