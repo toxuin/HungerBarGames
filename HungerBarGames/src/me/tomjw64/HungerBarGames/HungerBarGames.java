@@ -24,7 +24,9 @@ public class HungerBarGames extends JavaPlugin{
 	@Override
 	public void onDisable()
 	{
+		
 		PluginDescriptionFile pdf = getDescription();
+		GamesManager.endAll();
 		DataManager.saveArenas();
 		logger.info("["+pdf.getName()+"] disabled!");
 	}
@@ -48,6 +50,8 @@ public class HungerBarGames extends JavaPlugin{
 		
 		//Load commands
 		CommandHandler.loadCommands(this);
+		
+		
 		
 		PluginDescriptionFile pdf = getDescription();
 		logger.info("["+pdf.getName()+"] version "+pdf.getVersion()+" is enabled!");

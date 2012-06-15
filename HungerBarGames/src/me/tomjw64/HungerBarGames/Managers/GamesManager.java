@@ -140,4 +140,15 @@ public class GamesManager {
 		return null;
 	}
 	
+	public static void endAll()
+	{
+		for(Arena a:arenas)
+		{
+			if(a.getGame()!=null)
+			{
+				a.getGame().endGame(true);
+			}
+		}
+	}
+	
 }
