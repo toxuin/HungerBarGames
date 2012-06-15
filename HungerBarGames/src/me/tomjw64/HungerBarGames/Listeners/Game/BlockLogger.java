@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 
 import me.tomjw64.HungerBarGames.Game;
 import me.tomjw64.HungerBarGames.General.RollbackInfo;
@@ -35,4 +36,17 @@ public class BlockLogger extends GameListener{
 			getGame().getArena().addRollback(b,new RollbackInfo(0,(byte)0));
 		}
 	}
+	
+	@EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+	public void explode(EntityExplodeEvent explode)
+	{
+		if(getGame().getArena().isInArena(explode.getLocation()))
+		{
+			for(Block b:explode.blockList())
+			{
+				getGame().getArena().addRollback(b,new RollbackInfo(b.getTypeId(),b.getData()));
+			}
+		}
+	}
+	
 }
