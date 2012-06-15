@@ -207,10 +207,14 @@ public class Game extends ChatVariableHolder{
 		case LOBBY:
 			new LobbyLevelListener(this);
 			new LobbyBlockListener(this);
+			new LobbyRemovalListener(this);
 			break;
 		case COUNTDOWN:
 			new CountdownMotionListener(this);
 			new CountdownInteractListener(this);
+			new CountdownRemovalListener(this);
+			new CountdownDamageListener(this);
+			new CountdownArenaProtect(this);
 			break;
 		case IN_GAME:
 			new EliminationListener(this);
