@@ -25,7 +25,7 @@ public class GameMotionListener extends GameListener{
 		if(tribute||getGame().isSpec(mover))
 		{
 			Game g=GamesManager.getGame(mover,tribute);
-			if(g.getArena().isInArena(move.getTo()))
+			if(!g.getArena().isInArena(move.getTo()))
 			{
 				Location from=move.getFrom();
 				double x=Math.floor(from.getX()+.5);
