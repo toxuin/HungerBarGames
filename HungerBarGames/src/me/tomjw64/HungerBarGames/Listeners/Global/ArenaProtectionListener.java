@@ -27,7 +27,7 @@ public class ArenaProtectionListener implements Listener{
 		{
 			for(Arena a:GamesManager.getArenas())
 			{
-				if(a.isInArena(broken.getBlock()))
+				if(a.isCuboidSet()&&a.isInArena(broken.getBlock()))
 				{
 					broken.setCancelled(true);
 					return;
@@ -46,7 +46,7 @@ public class ArenaProtectionListener implements Listener{
 			{
 				for(Arena a:GamesManager.getArenas())
 				{
-					if(a.isInArena(placed.getBlock()))
+					if(a.isCuboidSet()&&a.isInArena(placed.getBlock()))
 					{
 						placed.setCancelled(true);
 						return;
