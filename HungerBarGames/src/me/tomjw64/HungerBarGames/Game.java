@@ -81,16 +81,16 @@ public class Game extends ChatVariableHolder{
 	{
 		status=null;
 		unregisterListeners();
+		for(Player p:spectators)
+		{
+			setSpec(p,false);
+		}
+		for(Player p:tributes)
+		{
+			removeTribute(p);
+		}
 		if(!forced)
 		{
-			for(Player p:spectators)
-			{
-				setSpec(p,false);
-			}
-			for(Player p:tributes)
-			{
-				removeTribute(p);
-			}
 			arena.endGame(repeat);
 		}
 		else
