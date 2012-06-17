@@ -48,6 +48,8 @@ public class ConfigManager {
 	private static Set<Integer> exempt=new HashSet<Integer>();
 	//Commands to run on player win
 	private static List<String> winCmds=new ArrayList<String>();
+	//Commands players may use in a game
+	private static List<String> allowCmds=new ArrayList<String>();
 	
 	
 	//Call onEnable for initialization
@@ -146,6 +148,11 @@ public class ConfigManager {
 			config.createSection("WinCommands");
 			config.set("WinCommands", new ArrayList<String>());
 		}
+		if(!config.contains("AllowedCommands"))
+		{
+			config.createSection("AllowedCommands");
+			config.set("AllowedCommands", new ArrayList<String>());
+		}
 		saveConfig();
 		
 		//Load configuration options to memory
@@ -174,6 +181,10 @@ public class ConfigManager {
 		for(String cmd:config.getStringList("WinCommands"))
 		{
 			winCmds.add(cmd.replace("/", ""));
+		}
+		for(String cmd:config.getStringList("AllowedCommands"))
+		{
+			allowCmds.add(cmd.replace("/", "").split(" ")[0]);
 		}
 	}
 	//Get the config
@@ -257,5 +268,9 @@ public class ConfigManager {
 	public static List<String> getWinCommands()
 	{
 		return winCmds;
+	}
+	public static List<String> getAllowedCommands()
+	{
+		return allowCmds;
 	}
 }
