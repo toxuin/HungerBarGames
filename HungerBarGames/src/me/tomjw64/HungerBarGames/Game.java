@@ -222,6 +222,8 @@ public class Game extends ChatVariableHolder{
 			new GameBlockListener(this);
 			new BlockLogger(this);
 			new GameChestListener(this);
+			new GameCommandListener(this);
+			new GameChatListener(this);
 			new GameTeleportListner(this);
 			new GameMotionListener(this);
 			new SpectatorRestrictionListener(this);
