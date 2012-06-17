@@ -1,13 +1,17 @@
 package me.tomjw64.HungerBarGames.Listeners.Game;
 
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 
 import me.tomjw64.HungerBarGames.Game;
 import me.tomjw64.HungerBarGames.Listeners.GameListener;
@@ -58,6 +62,32 @@ public class SpectatorRestrictionListener extends GameListener{
 		if(damage.getEntity() instanceof Player&&getGame().isSpec((Player)damage.getEntity()))
 		{
 			damage.setCancelled(true);
+		}
+		else if(damage instanceof EntityDamageByEntityEvent)
+		{
+			Entity damager=((EntityDamageByEntityEvent)damage).getDamager();
+			if(damager instanceof Player&&getGame().isSpec((Player)damager))
+			{
+				damage.setCancelled(true);
+			}
+		}
+	}
+	
+	@EventHandler(priority=EventPriority.NORMAL, ignoreCancelled=true)
+	public void target(EntityTargetEvent target)
+	{
+		if(target.getTarget() instanceof Player&&getGame().isSpec((Player)target.getTarget()))
+		{
+			target.setCancelled(true);
+		}
+	}
+	
+	@EventHandler(priority=EventPriority.NORMAL, ignoreCancelled=true)
+	public void pickup(PlayerPickupItemEvent pickup)
+	{
+		if(getGame().isSpec(pickup.getPlayer()))
+		{
+			pickup.setCancelled(true);
 		}
 	}
 	
