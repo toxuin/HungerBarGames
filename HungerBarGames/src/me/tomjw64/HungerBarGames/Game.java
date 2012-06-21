@@ -147,6 +147,7 @@ public class Game extends ChatVariableHolder{
 		p.getWorld().strikeLightning(p.getLocation().add(0, 100, 0));
 		deaths.add(p.getName());
 		removeTribute(p);
+		setSpec(p, true);
 		if(getNumTributes()==1)
 		{
 			declareWinner();
