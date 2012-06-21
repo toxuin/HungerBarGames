@@ -16,6 +16,7 @@ public class NightCheck extends ChatVariableHolder implements Runnable{
 	{
 		game=gm;
 		world=game.getArena().getWorld();
+		new Thread(this).start();
 	}
 	
 	@Override
