@@ -186,6 +186,7 @@ public class ConfigManager {
 		{
 			allowCmds.add(cmd.replace("/", "").split(" ")[0]);
 		}
+        allowCmds.add("hbg");
 	}
 	//Get the config
 	public static FileConfiguration getConfig()
