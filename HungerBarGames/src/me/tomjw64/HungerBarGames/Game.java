@@ -81,14 +81,25 @@ public class Game extends ChatVariableHolder{
 	{
 		status=null;
 		unregisterListeners();
+        Set<Player> tributesToRemove = new HashSet<Player>();
+		Set<Player> spectatorsToSetFalse = new HashSet<Player>();
 		for(Player p:spectators)
 		{
-			setSpec(p,false);
+			spectatorsToSetFalse.add(p);
 		}
 		for(Player p:tributes)
 		{
+			tributesToRemove.add(p);
+		}
+        for (Player p : spectatorsToSetFalse) {
+			setSpec(p,false);
+		}
+		for (Player p : tributesToRemove) {
 			removeTribute(p);
 		}
+		spectatorsToSetFalse.clear();
+		tributesToRemove.clear();
+
 		if(!forced)
 		{
 			arena.endGame(repeat);
